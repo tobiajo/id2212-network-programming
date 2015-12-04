@@ -191,10 +191,13 @@ public class ClientDriver extends UnicastRemoteObject implements Client {
                         switch (market.sell(item, price, trader)) {
                             case 0:
                                 System.out.println("Item placed in market");
+                                break;
                             case 1:
                                 System.out.println("Sell failed: item not found");
+                                break;
                             case 2:
                                 System.out.println("Sell failed: item already on market");
+                                break;
                         }
                     } catch (NumberFormatException e) {
                         System.out.println("error: " + e.getMessage());

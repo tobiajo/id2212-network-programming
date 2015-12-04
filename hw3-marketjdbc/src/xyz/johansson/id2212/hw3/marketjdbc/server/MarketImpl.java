@@ -134,7 +134,6 @@ public class MarketImpl extends UnicastRemoteObject implements Market {
         newAccount.setString(2, password);
         newAccount.executeUpdate();
         users.put(client, username);
-        // callback ?
         return true;
     }
 
