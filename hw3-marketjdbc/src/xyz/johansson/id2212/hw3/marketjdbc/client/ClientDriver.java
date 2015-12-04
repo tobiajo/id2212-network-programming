@@ -98,7 +98,6 @@ public class ClientDriver extends UnicastRemoteObject implements Client {
                 System.out.println("error: " + e.getMessage());
             }
         }
-
     }
 
     private void connectBank() throws RemoteException, NotBoundException, MalformedURLException, RejectedException {

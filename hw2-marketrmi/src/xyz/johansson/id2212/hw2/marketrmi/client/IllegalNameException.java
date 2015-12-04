@@ -11,7 +11,6 @@ public class IllegalNameException extends Exception {
         }
         for (char ch : name.toCharArray()) {
             if (ch < 'A' || ch > 'z') {
-                System.out.println(ch);
                 throw new IllegalNameException("illegal name");
             }
         }
