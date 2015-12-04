@@ -34,6 +34,7 @@ public class MarketImpl extends UnicastRemoteObject implements Market {
 
 
     public MarketImpl(String marketDB, String bankName) throws RemoteException, SQLException, ClassNotFoundException, MalformedURLException, NotBoundException {
+        this.marketDB = marketDB;
         this.bankName = bankName;
         users = new HashMap();
         Connection connection = getConnection(marketDB);
@@ -155,7 +156,7 @@ public class MarketImpl extends UnicastRemoteObject implements Market {
     @Override
     public void logout(Client client) throws RemoteException {
         users.remove(client);
-        System.out.println(marketDB + ": Logged out");
+        client.callback(marketDB + ": Logged out");
     }
 
     /**
@@ -199,7 +200,6 @@ public class MarketImpl extends UnicastRemoteObject implements Market {
     public synchronized boolean sell(Client client, int id, float price) throws RemoteException, SQLException {
         getUserItem.setInt(1, id);
         ResultSet rs = getUserItem.executeQuery();
-        System.out.println(id);
         if (!rs.next()) {
             rs.close();
             return false;
@@ -210,6 +210,7 @@ public class MarketImpl extends UnicastRemoteObject implements Market {
         // remove
         delUserItem.setInt(1, id);
         delUserItem.setString(2, seller);
+        delUserItem.executeUpdate();
         // add
         newMarketItem.setInt(1, id);
         newMarketItem.setString(2, seller);
@@ -226,7 +227,6 @@ public class MarketImpl extends UnicastRemoteObject implements Market {
     public synchronized int buy(Client client, int id) throws RemoteException, SQLException {
         getMarketItem.setInt(1, id);
         ResultSet rs = getMarketItem.executeQuery();
-        System.out.println(id);
         if (!rs.next()) {
             rs.close();
             return 1;
