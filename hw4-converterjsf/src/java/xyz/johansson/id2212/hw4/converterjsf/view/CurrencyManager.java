@@ -2,6 +2,7 @@ package xyz.johansson.id2212.hw4.converterjsf.view;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
@@ -15,27 +16,25 @@ public class CurrencyManager implements Serializable {
     private ConverterFacade converterFacade;
     private String newCurrencyName;
     private Double newCurrencyRate;
+    private List<String> currencies;
     private String currencyIn;
     private String currencyOut;
     private Double amountIn;
     private Double amountOut;
 
-    public void add() {
-        if (getNewCurrencyName().length() > 0 && getNewCurrencyRate() != null && converterFacade.findCurrency(getNewCurrencyName()) == null) {
-            converterFacade.persistCurrency(getNewCurrencyName(), getNewCurrencyRate());
-        }
+    @PostConstruct
+    public void init() {
+        setCurrencies(converterFacade.findCurrencyNames());
     }
 
-    public List<String> list() {
-        return converterFacade.findAllCurrencies();
+    public void add() {
+        if (converterFacade.persistCurrency(getNewCurrencyName(), getNewCurrencyRate())) {
+            init();
+        }
     }
 
     public void convert() {
-        Double rateIn = converterFacade.findCurrency(getCurrencyIn()).getRate();
-        Double rateOut = converterFacade.findCurrency(getCurrencyOut()).getRate();
-        if (getAmountIn() != null && rateIn != null && rateOut != null) {
-            setAmountOut(getAmountIn() * rateIn / rateOut);
-        }
+        setAmountOut(converterFacade.currencyConversion(getAmountIn(), getCurrencyIn(), getCurrencyOut()));
     }
 
     /**
@@ -64,6 +63,20 @@ public class CurrencyManager implements Serializable {
      */
     public void setNewCurrencyRate(Double newCurrencyRate) {
         this.newCurrencyRate = newCurrencyRate;
+    }
+
+    /**
+     * @return the currencies
+     */
+    public List<String> getCurrencies() {
+        return currencies;
+    }
+
+    /**
+     * @param currencies the currencies to set
+     */
+    public void setCurrencies(List<String> currencies) {
+        this.currencies = currencies;
     }
 
     /**

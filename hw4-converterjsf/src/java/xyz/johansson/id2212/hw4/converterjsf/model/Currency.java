@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
-public class Currency implements CurrencyDTO, Serializable {
+public class Currency implements Serializable {
 
     @Id
     private String id;
@@ -19,12 +19,10 @@ public class Currency implements CurrencyDTO, Serializable {
         this.rate = rate;
     }
 
-    @Override
     public String getId() {
         return id;
     }
 
-    @Override
     public Double getRate() {
         return rate;
     }

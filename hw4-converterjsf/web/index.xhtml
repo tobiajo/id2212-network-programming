@@ -22,7 +22,7 @@
             <p>
                 <h:outputLabel for="name" value="Name: "/>
                 <h:inputText id="name" value="#{currencyManager.newCurrencyName}"/>
-                <h:outputLabel for="rate" value="Value per SEK: "/>
+                <h:outputLabel for="rate" value=" Value per SEK: "/>
                 <h:inputText id="rate" value="#{currencyManager.newCurrencyRate}"/>
             </p>
             <p>
@@ -41,7 +41,7 @@
                         </td>
                         <td>
                             <h:selectOneMenu value="#{currencyManager.currencyIn}">
-                                <f:selectItems value="#{currencyManager.list()}" />
+                                <f:selectItems value="#{currencyManager.currencies}" />
                             </h:selectOneMenu>
                             <h:outputLabel for="input" value=": "/>
                             <h:inputText id="input" value="#{currencyManager.amountIn}"/>
@@ -53,7 +53,7 @@
                         </td>
                         <td>
                             <h:selectOneMenu value="#{currencyManager.currencyOut}">
-                                <f:selectItems value="#{currencyManager.list()}" />
+                                <f:selectItems value="#{currencyManager.currencies}" />
                             </h:selectOneMenu>
                             <h:outputLabel for="output" value=": " escape="false"/>
                             <h:outputText id="output" value="#{currencyManager.amountOut}"/>
