@@ -1,0 +1,53 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="xyz.johansson.id2212.hw5.hangmanandroid.view.GameFragment">
+
+    <LinearLayout
+        android:id="@+id/hangman_state"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/hangman_image"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".50" />
+
+        <TextView
+            android:id="@+id/hangman_word"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight=".50"
+            android:textSize="22sp" />
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/hangman_guess"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/hangman_state"
+        android:layout_centerInParent="true"
+        android:hint="Letter or full word" />
+
+    <Button
+        android:id="@+id/hangman_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/hangman_guess"
+        android:layout_centerInParent="true"
+        android:onClick="onGuessClicked"
+        android:text="Guess" />
+
+    <TextView
+        android:id="@+id/hangman_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/hangman_button"
+        android:layout_centerInParent="true"
+        android:text="\nGood luck!" />
+
+</RelativeLayout>
