@@ -96,7 +96,7 @@ public class EventHandler {
             serverInterface.disconnect();
         } else if (gameState.getMisses() == 6) {
             String fullWord = serverInterface.guessWord("dummy").getWord();
-            mainActivity.setHangmanInfo("You lost. The word was: " + fullWord);
+            mainActivity.setHangmanInfo("The word was: " + fullWord);
             serverInterface.disconnect();
         } else {
             mainActivity.setHangmanButton(true);
