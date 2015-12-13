@@ -17,7 +17,7 @@ public class SlowClientHandler implements Runnable {
     /**
      * Artificial delay.
      */
-    public static final int DELAY_MS = 1000;
+    public static final int DELAY_MS = 0;
 
     private final Socket socket;
     private final String word;
@@ -33,7 +33,7 @@ public class SlowClientHandler implements Runnable {
     public SlowClientHandler(Socket socket, String word) {
         this.socket = socket;
         this.word = word;
-        System.out.println("[" + socket.getInetAddress() + "] connected");
+        System.out.println("(" + socket.getInetAddress() + ") connected");
     }
 
     /**
@@ -42,15 +42,19 @@ public class SlowClientHandler implements Runnable {
     @Override
     public void run() {
         try {
-            System.out.println("[" + socket.getInetAddress() + "] word: " + word);
+            System.out.println("(" + socket.getInetAddress() + ") word: " + word);
             out = new ObjectOutputStream(socket.getOutputStream());
             out.flush();
             in = new ObjectInputStream(socket.getInputStream());
-            playGame();
+            try {
+                playGame();
+            } catch (IOException ex) {
+                System.out.println("(" + socket.getInetAddress() + ") connection lost");
+            }
             out.close();
             in.close();
             socket.close();
-            System.out.println("[" + socket.getInetAddress() + "] disconnected");
+            System.out.println("(" + socket.getInetAddress() + ") disconnected");
         } catch (IOException ex) {
             Logger.getLogger(SlowClientHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
