@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
     // Connection methods
     //-------------------------------------------------------------------------
 
-    public void onConnectClicked(View view) {
+    public void onConnectionButtonClicked(View view) {
         eventHandler.connectionAttempt(((EditText) findViewById(R.id.connection_ip)).getText().toString());
     }
 
@@ -75,43 +75,47 @@ public class MainActivity extends AppCompatActivity {
     // Game methods
     //-------------------------------------------------------------------------
 
-    public void onGuessClicked(View view) {
-        eventHandler.guessWord(((EditText) findViewById(R.id.hangman_guess)).getText().toString());
+    public void onGameButtonClicked(View view) {
+        eventHandler.guessWord(((EditText) findViewById(R.id.game_guess)).getText().toString());
     }
 
-    public void onHangmanBackClicked() {
+    public void onGameCreateView(GameFragment gameFragment) {
+        setGameState((GameState) gameFragment.getArguments().get("initialGameState"));
+    }
+
+    public void onGameDestroyView() {
         eventHandler.disconnect();
     }
 
-    public void setHangmanButton(final boolean enabled) {
+    public void setGameButton(final boolean enabled) {
         handler.post(new Runnable() {
             public void run() {
-                ((Button) findViewById(R.id.hangman_button)).setEnabled(enabled);
+                ((Button) findViewById(R.id.game_button)).setEnabled(enabled);
             }
         });
     }
 
-    public void setHangmanInfo(final String text) {
+    public void setGameInfo(final String text) {
         handler.post(new Runnable() {
             @Override
             public void run() {
-                ((TextView) findViewById(R.id.hangman_info)).setText('\n' + text);
+                ((TextView) findViewById(R.id.game_info)).setText('\n' + text);
             }
         });
     }
 
-    public void setHangmanState(GameState gameState) {
-        setHangmanImage(gameState.getMisses());
-        setHangmanWord(gameState.getWord());
+    public void setGameState(GameState gameState) {
+        setGameImage(gameState.getMisses());
+        setGameWord(gameState.getWord());
     }
 
-    private void setHangmanImage(final int state) {
+    private void setGameImage(final int state) {
         handler.post(new Runnable() {
             @Override
             public void run() {
                 try {
                     int drawableId = R.drawable.class.getField("hangman" + state).getInt(null);
-                    ((ImageView) findViewById(R.id.hangman_image)).setImageResource(drawableId);
+                    ((ImageView) findViewById(R.id.game_image)).setImageResource(drawableId);
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 } catch (NoSuchFieldException e) {
@@ -121,11 +125,11 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void setHangmanWord(final String word) {
+    private void setGameWord(final String word) {
         handler.post(new Runnable() {
             @Override
             public void run() {
-                ((TextView) findViewById(R.id.hangman_word)).setText(word);
+                ((TextView) findViewById(R.id.game_word)).setText(word);
             }
         });
     }

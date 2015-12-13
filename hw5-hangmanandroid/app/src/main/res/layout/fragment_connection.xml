@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/connection_ip"
         android:layout_centerInParent="true"
-        android:onClick="onConnectClicked"
+        android:onClick="onConnectionButtonClicked"
         android:text="Connect" />
 
     <TextView

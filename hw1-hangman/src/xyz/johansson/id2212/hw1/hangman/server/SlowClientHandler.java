@@ -17,7 +17,7 @@ public class SlowClientHandler implements Runnable {
     /**
      * Artificial delay.
      */
-    public static final int DELAY_MS = 0;
+    public static final int DELAY_MS = 1000;
 
     private final Socket socket;
     private final String word;
@@ -48,6 +48,7 @@ public class SlowClientHandler implements Runnable {
             in = new ObjectInputStream(socket.getInputStream());
             try {
                 playGame();
+                System.out.println("(" + socket.getInetAddress() + ") game finished");
             } catch (IOException ex) {
                 System.out.println("(" + socket.getInetAddress() + ") connection lost");
             }

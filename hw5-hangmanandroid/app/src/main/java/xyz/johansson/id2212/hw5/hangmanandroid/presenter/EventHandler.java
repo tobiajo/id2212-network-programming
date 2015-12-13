@@ -70,13 +70,13 @@ public class EventHandler {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                mainActivity.setHangmanButton(false);
-                mainActivity.setHangmanInfo("Waits answer... Please wait");
+                mainActivity.setGameButton(false);
+                mainActivity.setGameInfo("Waits answer... Please wait");
                 try {
                     GameState newGameState = serverInterface.guessWord(guess);
-                    updateGamePanel(newGameState);
+                    updateGameState(newGameState);
                 } catch (IOException ex) {
-                    mainActivity.setHangmanInfo("Connection lost. Please restart");
+                    mainActivity.setGameInfo("Connection lost. Please restart");
                     try {
                         serverInterface.disconnect();
                     } catch (IOException e) {
@@ -102,18 +102,18 @@ public class EventHandler {
         }).start();
     }
 
-    private void updateGamePanel(GameState gameState) throws IOException, ClassNotFoundException {
-        mainActivity.setHangmanState(gameState);
+    private void updateGameState(GameState gameState) throws IOException, ClassNotFoundException {
+        mainActivity.setGameState(gameState);
         if (!gameState.getWord().contains("-")) {
-            mainActivity.setHangmanInfo("Congratulations, you won!");
+            mainActivity.setGameInfo("Congratulations, you won!");
             serverInterface.disconnect();
         } else if (gameState.getMisses() == 6) {
             String fullWord = serverInterface.guessWord("dummy").getWord();
-            mainActivity.setHangmanInfo("The word was: " + fullWord);
+            mainActivity.setGameInfo("The word was: " + fullWord);
             serverInterface.disconnect();
         } else {
-            mainActivity.setHangmanButton(true);
-            mainActivity.setHangmanInfo("");
+            mainActivity.setGameButton(true);
+            mainActivity.setGameInfo("");
         }
     }
 }

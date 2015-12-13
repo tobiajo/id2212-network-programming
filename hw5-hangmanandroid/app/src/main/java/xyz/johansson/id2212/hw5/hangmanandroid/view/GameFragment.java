@@ -13,7 +13,7 @@ public class GameFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        ((MainActivity) getActivity()).setHangmanState((GameState) getArguments().get("initialGameState"));
+        ((MainActivity) getActivity()).onGameCreateView(this);
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_game, container, false);
     }
@@ -21,6 +21,6 @@ public class GameFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ((MainActivity) getActivity()).onHangmanBackClicked();
+        ((MainActivity) getActivity()).onGameDestroyView();
     }
 }
