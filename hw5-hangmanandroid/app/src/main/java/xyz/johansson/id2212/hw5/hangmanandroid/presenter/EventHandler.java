@@ -89,6 +89,19 @@ public class EventHandler {
         }).start();
     }
 
+    public void disconnect() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    serverInterface.disconnect();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
     private void updateGamePanel(GameState gameState) throws IOException, ClassNotFoundException {
         mainActivity.setHangmanState(gameState);
         if (!gameState.getWord().contains("-")) {

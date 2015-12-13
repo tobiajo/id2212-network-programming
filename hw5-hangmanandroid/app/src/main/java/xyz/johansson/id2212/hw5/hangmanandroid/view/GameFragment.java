@@ -21,5 +21,6 @@ public class GameFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        ((MainActivity) getActivity()).onHangmanBackClicked();
     }
 }

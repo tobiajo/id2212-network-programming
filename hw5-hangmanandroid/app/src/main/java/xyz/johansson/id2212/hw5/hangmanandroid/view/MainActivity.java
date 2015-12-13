@@ -79,6 +79,10 @@ public class MainActivity extends AppCompatActivity {
         eventHandler.guessWord(((EditText) findViewById(R.id.hangman_guess)).getText().toString());
     }
 
+    public void onHangmanBackClicked() {
+        eventHandler.disconnect();
+    }
+
     public void setHangmanButton(final boolean enabled) {
         handler.post(new Runnable() {
             public void run() {
